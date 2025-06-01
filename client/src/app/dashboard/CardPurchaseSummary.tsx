@@ -47,6 +47,18 @@ const CardPurchaseSummary = () => {
   const areaPath = `${linePath} L ${
     sortedPurchaseData[sortedPurchaseData.length - 1]
   } 80 L ${sortedPurchaseData[0]} 80 Z`;
+
+  const lastPurchase = sortedPurchaseData[sortedPurchaseData.length - 1];
+  const changePercentage = lastPurchase?.changePercentage;
+  const changeSign =
+    changePercentage !== undefined ? (changePercentage > 0 ? "+" : "") : "";
+  const changeColor =
+    changePercentage !== undefined
+      ? changePercentage > 0
+        ? "text-green-600"
+        : "text-red-600"
+      : "";
+
   return (
     <div className="h-full bg-white rounded-xl shadow-sm border border-gray-200 p-4 flex flex-col">
       <div className="flex items-center justify-between mb-3 flex-shrink-0">
@@ -201,29 +213,21 @@ const CardPurchaseSummary = () => {
           <div>
             <p className="text-xs text-gray-500">Latest Change</p>
             <p
-            className={`text-sm font-semibold ${
-              sortedPurchaseData.length > 0 &&
-              sortedPurchaseData[sortedPurchaseData.length - 1]?.changePercentage !== undefined
-                ? sortedPurchaseData[sortedPurchaseData.length - 1]?.changePercentage! >= 0
-                  ? "text-green-600"
-                  : "text-red-600"
-                : ""
-            }`}
-            
+              className={`text-sm font-semibold ${
+                sortedPurchaseData.length > 0 &&
+                sortedPurchaseData[sortedPurchaseData.length - 1]
+                  ?.changePercentage !== undefined
+                  ? sortedPurchaseData[sortedPurchaseData.length - 1]
+                      ?.changePercentage! >= 0
+                    ? "text-green-600"
+                    : "text-red-600"
+                  : ""
+              }`}
             >
-              {sortedPurchaseData.length > 0 &&
-              sortedPurchaseData[sortedPurchaseData.length - 1]?.changePercentage !== undefined
-                ? (sortedPurchaseData[sortedPurchaseData.length - 1] &&
-                    sortedPurchaseData[sortedPurchaseData.length - 1].changePercentage !== undefined &&
-                    sortedPurchaseData[sortedPurchaseData.length - 1].changePercentage > 0
-                    ? "+"
-                    : "") +
-                  (sortedPurchaseData[sortedPurchaseData.length - 1] &&
-                  sortedPurchaseData[sortedPurchaseData.length - 1].changePercentage !== undefined
-                    ? sortedPurchaseData[sortedPurchaseData.length - 1].changePercentage.toFixed(1)
-                    : "") +
-                  "%"
-                : "--"}
+              <span className={`text-sm font-semibold ${changeColor}`}>
+                {changeSign}
+                {changePercentage ?? "--"}%
+              </span>
             </p>
           </div>
         </div>
