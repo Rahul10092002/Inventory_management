@@ -1,8 +1,6 @@
-import React from 'react'
-
 function SalesDiscount() {
   return (
-    <div className="col-span-2 row-span-2 col-start-5 row-start-5 bg-white rounded-xl shadow-sm border border-gray-200 p-4 flex flex-col overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-3 sm:p-4 flex flex-col overflow-hidden h-full min-h-[250px] lg:min-h-0">
       <div className="flex items-center justify-between mb-3 flex-shrink-0">
         <div>
           <h3 className="text-base font-semibold text-gray-900">
@@ -27,22 +25,24 @@ function SalesDiscount() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 flex-1">
+      <div className="grid grid-cols-2 gap-2 sm:gap-3 flex-1">
         <div className="space-y-1">
           <p className="text-xs text-gray-500">Total Sales</p>
-          <p className="text-lg font-bold text-gray-900">$125,789</p>
+          <p className="text-sm sm:text-lg font-bold text-gray-900">$125,789</p>
         </div>
         <div className="space-y-1">
           <p className="text-xs text-gray-500">Discount Amount</p>
-          <p className="text-lg font-bold text-gray-900">$12,450</p>
+          <p className="text-sm sm:text-lg font-bold text-gray-900">$12,450</p>
         </div>
         <div className="space-y-1">
           <p className="text-xs text-gray-500">Discount %</p>
-          <p className="text-lg font-bold text-gray-900">9.8%</p>
+          <p className="text-sm sm:text-lg font-bold text-gray-900">9.8%</p>
         </div>
         <div className="space-y-1">
           <p className="text-xs text-gray-500">Top Discount</p>
-          <p className="text-sm font-medium text-gray-900">Summer Sale</p>
+          <p className="text-xs sm:text-sm font-medium text-gray-900">
+            Summer Sale
+          </p>
         </div>
       </div>
 
@@ -62,4 +62,4 @@ function SalesDiscount() {
   );
 }
 
-export default SalesDiscount
+export default SalesDiscount;

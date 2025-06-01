@@ -1,5 +1,7 @@
+"use client";
+
 import { useGetDashboardMetricsQuery } from "@/state/api";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const CardSalesSummary = () => {
   const { data, isLoading, isError } = useGetDashboardMetricsQuery();
@@ -8,8 +10,6 @@ const CardSalesSummary = () => {
   console.log("Sales Summary Data:", salesData);
 
   const [timeframe, setTimeframe] = useState("monthly");
-
-
 
   if (isError) {
     return <div className="m-5">Failed to fetch data</div>;
@@ -46,7 +46,7 @@ const CardSalesSummary = () => {
       : sortedSalesData;
 
   return (
-    <div className="h-full bg-white rounded-xl shadow-sm border border-gray-200 p-4 flex flex-col overflow-hidden">
+    <div className="h-full bg-white rounded-xl shadow-sm border border-gray-200 p-3 sm:p-4 flex flex-col overflow-hidden min-h-[400px] lg:min-h-0">
       <div className="flex items-center justify-between mb-4 flex-shrink-0">
         <div>
           <h3 className="text-base font-semibold text-gray-900">
@@ -108,12 +108,12 @@ const CardSalesSummary = () => {
       </div>
 
       {/* Time Period Tabs */}
-      <div className="flex space-x-1 mb-4 bg-gray-100 rounded-lg p-1 flex-shrink-0">
+      <div className="flex space-x-1 mb-4 bg-gray-100 rounded-lg p-1 flex-shrink-0 overflow-x-auto">
         {["Weekly", "Monthly", "Yearly"].map((period) => (
           <button
             key={period}
             onClick={() => setTimeframe(period.toLowerCase())}
-            className={`flex-1 py-1.5 px-2 text-xs font-medium rounded-md transition-colors ${
+            className={`flex-shrink-0 py-1.5 px-2 sm:px-3 text-xs font-medium rounded-md transition-colors ${
               timeframe === period.toLowerCase()
                 ? "bg-white text-gray-900 shadow-sm"
                 : "text-gray-500 hover:text-gray-700"
@@ -170,10 +170,10 @@ const CardSalesSummary = () => {
 
       {/* Summary Stats */}
       <div className="mt-3 pt-3 border-t border-gray-200 flex-shrink-0">
-        <div className="grid grid-cols-3 gap-2 text-center">
+        <div className="grid grid-cols-3 gap-1 sm:gap-2 text-center">
           <div>
             <p className="text-xs text-gray-500">Highest</p>
-            <p className="text-sm font-semibold text-gray-900">
+            <p className="text-xs sm:text-sm font-semibold text-gray-900">
               $
               {(
                 Math.max(...salesData.map((d) => d.totalValue)) / 1000000
@@ -183,7 +183,7 @@ const CardSalesSummary = () => {
           </div>
           <div>
             <p className="text-xs text-gray-500">Lowest</p>
-            <p className="text-sm font-semibold text-gray-900">
+            <p className="text-xs sm:text-sm font-semibold text-gray-900">
               $
               {(
                 Math.min(...salesData.map((d) => d.totalValue)) / 1000000
@@ -193,7 +193,7 @@ const CardSalesSummary = () => {
           </div>
           <div>
             <p className="text-xs text-gray-500">Average</p>
-            <p className="text-sm font-semibold text-gray-900">
+            <p className="text-xs sm:text-sm font-semibold text-gray-900">
               ${(totalSales / salesData.length / 1000000).toFixed(1)}M
             </p>
           </div>

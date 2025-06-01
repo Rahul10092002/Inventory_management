@@ -18,7 +18,6 @@ const CardExpenseSummary = () => {
           style: "currency",
           currency: "USD",
         });
- 
 
   // Normalize heights for bar chart visualization
   const maxExpense = Math.max(...expenseSummary.map((e) => e.totalExpenses));
@@ -28,11 +27,11 @@ const CardExpenseSummary = () => {
     month: new Date(e.date).toLocaleString("default", {
       month: "short",
       year: "numeric",
-      }),
+    }),
   }));
 
   return (
-    <div className="col-span-2 row-span-2 col-start-5 row-start-3 bg-white rounded-xl shadow-sm border border-gray-200 p-4 flex flex-col">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-3 sm:p-4 flex flex-col h-full min-h-[300px] lg:min-h-0">
       <div className="flex items-center justify-between mb-3 flex-shrink-0">
         <div>
           <h3 className="text-base font-semibold text-gray-900">
@@ -84,18 +83,25 @@ const CardExpenseSummary = () => {
       </div>
 
       {/* Expense Bar Chart */}
-      <div className="flex items-end space-x-1 gap-3 flex-1 min-h-0">
-        {normalizedSummary.slice(0, 8).map((item, index) => (
-          <div key={index} className="flex-1 flex flex-col items-center h-full">
-            <div className="flex-1 flex items-end w-full">
-              <div
-                className="w-full bg-orange-400 rounded-t-sm hover:bg-orange-500 transition-colors"
-                style={{ height: `${item.heightPercent * 0.6}%` }}
-              ></div>
+      <div className="flex items-end space-x-0.5 sm:space-x-1 gap-1 sm:gap-3 flex-1 min-h-0">
+        {normalizedSummary
+          .slice(0, window.innerWidth < 640 ? 6 : 8)
+          .map((item, index) => (
+            <div
+              key={index}
+              className="flex-1 flex flex-col items-center h-full"
+            >
+              <div className="flex-1 flex items-end w-full">
+                <div
+                  className="w-full bg-orange-400 rounded-t-sm hover:bg-orange-500 transition-colors"
+                  style={{ height: `${item.heightPercent * 0.6}%` }}
+                ></div>
+              </div>
+              <span className="text-xs text-gray-500 mt-1 truncate">
+                {item.month}
+              </span>
             </div>
-            <span className="text-xs text-gray-500 mt-1">{item.month}</span>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );

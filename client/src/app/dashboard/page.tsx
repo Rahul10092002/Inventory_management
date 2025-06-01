@@ -1,38 +1,57 @@
 "use client";
-import React from "react";
 import CardPopularProducts from "./CardPopularProducts";
 import CardSalesSummary from "./CardSalesSummary";
 import CardPurchaseSummary from "./CardPurchaseSummary";
 import CardExpenseSummary from "./CardExpenseSummary";
-import StatCard from "./StatCard";
-import {
-  Package,
-  TrendingUp,
-  TrendingDown,
-  CheckCircle,
-  Tag,
-} from "lucide-react";
 import CustomerExpenses from "./CustomerExpenses";
 import PendingOrders from "./PendingOrders";
 import SalesDiscount from "./SalesDiscount";
 
 function Dashboard() {
   return (
-    <div className="grid grid-cols-6 grid-rows-6 gap-4 lg:gap-6 h-[800px]">
-      <CardPopularProducts />
-      <div className="md:col-span-3 lg:col-span-2 lg:col-start-3 lg:row-span-4 h-[400px] md:h-[350px] lg:h-auto">
+    <div
+      className="grid gap-4 lg:gap-6 min-h-screen p-4 
+  grid-cols-1 
+  sm:grid-cols-2 
+  lg:grid-cols-6 
+  auto-rows-auto
+  lg:grid-rows-6 
+  lg:h-[800px]"
+    >
+      {/* Popular Products - Full width on mobile, spans 2 cols on larger screens */}
+      <div className="sm:col-span-2 lg:col-span-2 lg:row-span-4">
+        <CardPopularProducts />
+      </div>
+
+      {/* Sales Summary - Full width on mobile, spans remaining space */}
+      <div className="sm:col-span-2 lg:col-span-2 lg:col-start-3 lg:row-span-4">
         <CardSalesSummary />
       </div>
-      <div className="md:col-span-3 lg:col-span-2 lg:col-start-5 lg:row-span-2 h-[200px] md:h-[250px] lg:h-auto">
+
+      {/* Purchase Summary - Stacks on mobile */}
+      <div className="sm:col-span-2 lg:col-span-2 lg:col-start-5 lg:row-span-2">
         <CardPurchaseSummary />
       </div>
-      <CardExpenseSummary />
-      <div className="md:col-span-1 lg:col-span-2 lg:row-start-5 lg:row-span-2 h-[250px] md:h-[300px] lg:h-auto">
+
+      {/* Expense Summary - Stacks on mobile */}
+      <div className="sm:col-span-2 lg:col-span-2 lg:col-start-5 lg:row-start-3 lg:row-span-2">
+        <CardExpenseSummary />
+      </div>
+
+      {/* Customer Expenses - Responsive positioning */}
+      <div className="sm:col-span-1 lg:col-span-2 lg:row-start-5 lg:row-span-2">
         <CustomerExpenses />
       </div>
 
-      <PendingOrders />
-      <SalesDiscount />
+      {/* Pending Orders - Responsive positioning */}
+      <div className="sm:col-span-1 lg:col-span-2 lg:col-start-3 lg:row-start-5 lg:row-span-2">
+        <PendingOrders />
+      </div>
+
+      {/* Sales Discount - Responsive positioning */}
+      <div className="sm:col-span-2 lg:col-span-2 lg:col-start-5 lg:row-start-5 lg:row-span-2">
+        <SalesDiscount />
+      </div>
       {/* <StatCard
         title="Customer & Expenses"
         primaryIcon={<Package className="text-blue-600 w-6 h-6" />}

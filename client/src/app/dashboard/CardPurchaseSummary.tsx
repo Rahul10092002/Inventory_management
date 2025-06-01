@@ -1,15 +1,4 @@
 import { useGetDashboardMetricsQuery } from "@/state/api";
-import { TrendingDown, TrendingUp } from "lucide-react";
-import numeral from "numeral";
-import React from "react";
-import {
-  Area,
-  AreaChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 
 const CardPurchaseSummary = () => {
   const { data, isLoading } = useGetDashboardMetricsQuery();
@@ -60,7 +49,7 @@ const CardPurchaseSummary = () => {
       : "";
 
   return (
-    <div className="h-full bg-white rounded-xl shadow-sm border border-gray-200 p-4 flex flex-col">
+    <div className="h-full bg-white rounded-xl shadow-sm border border-gray-200 p-3 sm:p-4 flex flex-col min-h-[300px] lg:min-h-0">
       <div className="flex items-center justify-between mb-3 flex-shrink-0">
         <div>
           <h3 className="text-base font-semibold text-gray-900">
@@ -199,10 +188,10 @@ const CardPurchaseSummary = () => {
 
       {/* Purchase Stats */}
       <div className="mt-2 pt-2 border-t border-gray-200 flex-shrink-0">
-        <div className="grid grid-cols-2 gap-2 text-center">
+        <div className="grid grid-cols-2 gap-1 sm:gap-2 text-center">
           <div>
             <p className="text-xs text-gray-500">Peak Purchase</p>
-            <p className="text-sm font-semibold text-gray-900">
+            <p className="text-xs sm:text-sm font-semibold text-gray-900">
               $
               {(
                 Math.max(...purchaseData.map((d) => d.totalPurchased)) / 1000000
@@ -213,7 +202,7 @@ const CardPurchaseSummary = () => {
           <div>
             <p className="text-xs text-gray-500">Latest Change</p>
             <p
-              className={`text-sm font-semibold ${
+              className={`text-xs sm:text-sm font-semibold ${
                 sortedPurchaseData.length > 0 &&
                 sortedPurchaseData[sortedPurchaseData.length - 1]
                   ?.changePercentage !== undefined
@@ -224,7 +213,9 @@ const CardPurchaseSummary = () => {
                   : ""
               }`}
             >
-              <span className={`text-sm font-semibold ${changeColor}`}>
+              <span
+                className={`text-xs sm:text-sm font-semibold ${changeColor}`}
+              >
                 {changeSign}
                 {changePercentage ?? "--"}%
               </span>

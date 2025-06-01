@@ -1,41 +1,38 @@
-import { useGetDashboardMetricsQuery } from '@/state/api';
-import React from 'react'
-
 function PendingOrders() {
-    const pendingOrders = [
-      {
-        id: "#ORD-7891",
-        customer: "Alex Johnson",
-        amount: 459.99,
-        status: "Processing",
-      },
-      {
-        id: "#ORD-8901",
-        customer: "Sarah Williams",
-        amount: 289.5,
-        status: "Pending",
-      },
-      {
-        id: "#ORD-9012",
-        customer: "Michael Brown",
-        amount: 599.99,
-        status: "Processing",
-      },
-      {
-        id: "#ORD-9123",
-        customer: "Emma Davis",
-        amount: 199.99,
-        status: "Pending",
-      },
-      {
-        id: "#ORD-9234",
-        customer: "John Smith",
-        amount: 329.99,
-        status: "Processing",
-      },
-    ];
+  const pendingOrders = [
+    {
+      id: "#ORD-7891",
+      customer: "Alex Johnson",
+      amount: 459.99,
+      status: "Processing",
+    },
+    {
+      id: "#ORD-8901",
+      customer: "Sarah Williams",
+      amount: 289.5,
+      status: "Pending",
+    },
+    {
+      id: "#ORD-9012",
+      customer: "Michael Brown",
+      amount: 599.99,
+      status: "Processing",
+    },
+    {
+      id: "#ORD-9123",
+      customer: "Emma Davis",
+      amount: 199.99,
+      status: "Pending",
+    },
+    {
+      id: "#ORD-9234",
+      customer: "John Smith",
+      amount: 329.99,
+      status: "Processing",
+    },
+  ];
   return (
-    <div className="col-span-2 row-span-2 col-start-3 row-start-5 bg-white rounded-xl shadow-sm border border-gray-200 p-4 flex flex-col overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-3 sm:p-4 flex flex-col overflow-hidden h-full min-h-[250px] lg:min-h-0">
       <div className="flex items-center justify-between mb-3 flex-shrink-0">
         <div>
           <h3 className="text-base font-semibold text-gray-900">
@@ -60,11 +57,11 @@ function PendingOrders() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto space-y-2">
+      <div className="flex-1 overflow-y-auto space-y-2 max-h-[200px] sm:max-h-none scrollbar-hide">
         {pendingOrders.slice(0, 4).map((order, index) => (
           <div
             key={index}
-            className="flex items-center justify-between p-2 bg-gray-50 rounded-lg"
+            className="flex items-center justify-between p-2 bg-gray-50 rounded-lg gap-2"
           >
             <div className="min-w-0 flex-1">
               <p className="text-xs font-medium text-gray-900 truncate">
@@ -72,7 +69,7 @@ function PendingOrders() {
               </p>
               <p className="text-xs text-gray-500 truncate">{order.customer}</p>
             </div>
-            <div className="flex items-center space-x-2 flex-shrink-0">
+            <div className="flex flex-col sm:flex-row items-end sm:items-center space-y-1 sm:space-y-0 sm:space-x-2 flex-shrink-0">
               <span className="text-xs font-medium text-gray-900">
                 ${order.amount}
               </span>
@@ -99,4 +96,4 @@ function PendingOrders() {
   );
 }
 
-export default PendingOrders
+export default PendingOrders;

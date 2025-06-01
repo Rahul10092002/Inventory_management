@@ -1,6 +1,4 @@
 import { useGetDashboardMetricsQuery } from "@/state/api";
-import React from "react";
-import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 
 function CustomerExpenses() {
   const { data, isLoading } = useGetDashboardMetricsQuery();
@@ -54,7 +52,7 @@ function CustomerExpenses() {
       10
   );
   return (
-    <div className="h-full bg-white rounded-xl shadow-sm border border-gray-200 p-4 flex flex-col overflow-hidden">
+    <div className="h-full bg-white rounded-xl shadow-sm border border-gray-200 p-3 sm:p-4 flex flex-col overflow-hidden min-h-[250px] lg:min-h-0">
       <div className="flex items-center justify-between mb-3 flex-shrink-0">
         <div>
           <h3 className="text-base font-semibold text-gray-900">
@@ -87,7 +85,7 @@ function CustomerExpenses() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-1 min-h-0">
+      <div className="grid grid-cols-1 gap-3 flex-1 min-h-0">
         {/* Customer Stats */}
         <div className="space-y-2">
           <div className="flex justify-between">
@@ -146,43 +144,43 @@ function CustomerExpenses() {
               </span>
             </div>
           </div>
-        </div>
 
-        {/* Expense Categories Donut */}
-        <div className="flex items-center justify-center">
-          <div className="relative w-16 h-16 sm:w-20 sm:h-20">
-            <svg
-              className="w-full h-full transform -rotate-90"
-              viewBox="0 0 100 100"
-            >
-              {expenseCategories.map((category, index) => {
-                const offset = expenseCategories
-                  .slice(0, index)
-                  .reduce((sum, cat) => sum + cat.value, 0);
-                const circumference = 2 * Math.PI * 35;
-                const strokeDasharray = `${
-                  (category.value / 100) * circumference
-                } ${circumference}`;
-                const strokeDashoffset = -((offset / 100) * circumference);
+          {/* Expense Categories Donut - moved here for mobile */}
+          <div className="flex items-center justify-center pt-2">
+            <div className="relative w-16 h-16">
+              <svg
+                className="w-full h-full transform -rotate-90"
+                viewBox="0 0 100 100"
+              >
+                {expenseCategories.map((category, index) => {
+                  const offset = expenseCategories
+                    .slice(0, index)
+                    .reduce((sum, cat) => sum + cat.value, 0);
+                  const circumference = 2 * Math.PI * 35;
+                  const strokeDasharray = `${
+                    (category.value / 100) * circumference
+                  } ${circumference}`;
+                  const strokeDashoffset = -((offset / 100) * circumference);
 
-                return (
-                  <circle
-                    key={index}
-                    cx="50"
-                    cy="50"
-                    r="35"
-                    fill="none"
-                    stroke={category.strokeColor}
-                    strokeWidth="6"
-                    strokeDasharray={strokeDasharray}
-                    strokeDashoffset={strokeDashoffset}
-                    className="hover:stroke-8 transition-all cursor-pointer"
-                  />
-                );
-              })}
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-xs font-medium text-gray-600">100%</span>
+                  return (
+                    <circle
+                      key={index}
+                      cx="50"
+                      cy="50"
+                      r="35"
+                      fill="none"
+                      stroke={category.strokeColor}
+                      strokeWidth="6"
+                      strokeDasharray={strokeDasharray}
+                      strokeDashoffset={strokeDashoffset}
+                      className="hover:stroke-8 transition-all cursor-pointer"
+                    />
+                  );
+                })}
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-xs font-medium text-gray-600">100%</span>
+              </div>
             </div>
           </div>
         </div>
@@ -204,10 +202,12 @@ function CustomerExpenses() {
               </span>
               <span
                 className={`text-xs ${
-                  (category.change ?? 0) >= 0 ? "text-green-600" : "text-red-600"
+                  (category.change ?? 0) >= 0
+                    ? "text-green-600"
+                    : "text-red-600"
                 }`}
               >
-                {(category.change ?? 0) ? "+" : ""}
+                {category.change ?? 0 ? "+" : ""}
                 {(category.change ?? 0).toFixed(1)}%
               </span>
             </div>

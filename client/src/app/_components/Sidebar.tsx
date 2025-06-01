@@ -16,13 +16,14 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 interface SidebarLinkProps {
   href: string;
   icon: LucideIcon;
   label: string;
   isCollapsed: boolean;
+  onClick?: () => void;
 }
 
 const SidebarLink = ({
@@ -30,13 +31,14 @@ const SidebarLink = ({
   icon: Icon,
   label,
   isCollapsed,
+  onClick,
 }: SidebarLinkProps) => {
   const pathname = usePathname();
   const isActive =
     pathname === href || (pathname === "/" && href === "/dashboard");
 
   return (
-    <Link href={href}>
+    <Link href={href} onClick={onClick}>
       <div
         className={`cursor-pointer flex items-center ${
           isCollapsed ? "justify-center py-4" : "justify-start px-8 py-4"
@@ -47,7 +49,6 @@ const SidebarLink = ({
       }`}
       >
         <Icon className="w-6 h-6 !text-gray-700" />
-
         <span
           className={`${
             isCollapsed ? "hidden" : "block"
@@ -60,16 +61,41 @@ const SidebarLink = ({
   );
 };
 
+
 const Sidebar = () => {
   const dispatch = useAppDispatch();
   const isSidebarCollapsed = useAppSelector(
     (state) => state.global.isSidebarCollapse
   );
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
   const toggleSidebar = () => {
     dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target as Node) &&
+        window.innerWidth < 768 &&
+        !isSidebarCollapsed
+      ) {
+        dispatch(setIsSidebarCollapsed(true));
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dispatch, isSidebarCollapsed]);
+
+  const handleNavItemClick = () => {
+    if (window.innerWidth < 768) {
+      dispatch(setIsSidebarCollapsed(true));
+    }
+  };
   const sidebarClassNames = `fixed flex flex-col ${
     isSidebarCollapsed ? "w-0 md:w-16" : "w-72 md:w-64"
   } bg-white transition-all duration-300 overflow-hidden h-full shadow-md z-40`;
@@ -126,36 +152,42 @@ const Sidebar = () => {
           icon={Layout}
           label="Dashboard"
           isCollapsed={isSidebarCollapsed}
+          onClick={handleNavItemClick}
         />
         <SidebarLink
           href="/inventory"
           icon={Archive}
           label="Inventory"
           isCollapsed={isSidebarCollapsed}
+          onClick={handleNavItemClick}
         />
         <SidebarLink
           href="/products"
           icon={Clipboard}
           label="Products"
           isCollapsed={isSidebarCollapsed}
+          onClick={handleNavItemClick}
         />
         <SidebarLink
           href="/users"
           icon={User}
           label="Users"
           isCollapsed={isSidebarCollapsed}
+          onClick={handleNavItemClick}
         />
         <SidebarLink
           href="/settings"
           icon={SlidersHorizontal}
           label="Settings"
           isCollapsed={isSidebarCollapsed}
+          onClick={handleNavItemClick}
         />
         <SidebarLink
           href="/expenses"
           icon={CircleDollarSign}
           label="Expenses"
           isCollapsed={isSidebarCollapsed}
+          onClick={handleNavItemClick}
         />
       </div>
 
