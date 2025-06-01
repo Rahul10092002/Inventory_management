@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useAppDispatch, useAppSelector } from "@/app/redux";
@@ -61,7 +60,6 @@ const SidebarLink = ({
   );
 };
 
-
 const Sidebar = () => {
   const dispatch = useAppDispatch();
   const isSidebarCollapsed = useAppSelector(
@@ -91,11 +89,24 @@ const Sidebar = () => {
     };
   }, [dispatch, isSidebarCollapsed]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1024) {
+        dispatch(setIsSidebarCollapsed(true));
+      }
+    };
+
+    handleResize(); // initial check on mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [dispatch]);
+
   const handleNavItemClick = () => {
     if (window.innerWidth < 768) {
       dispatch(setIsSidebarCollapsed(true));
     }
   };
+
   const sidebarClassNames = `fixed flex flex-col ${
     isSidebarCollapsed ? "w-0 md:w-16" : "w-72 md:w-64"
   } bg-white transition-all duration-300 overflow-hidden h-full shadow-md z-40`;
