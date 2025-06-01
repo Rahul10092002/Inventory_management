@@ -201,14 +201,15 @@ const CardPurchaseSummary = () => {
           <div>
             <p className="text-xs text-gray-500">Latest Change</p>
             <p
-              className={`text-sm font-semibold ${
-                sortedPurchaseData.length > 0 &&
-                sortedPurchaseData[sortedPurchaseData.length - 1]?.changePercentage !== undefined
-                  ? sortedPurchaseData[sortedPurchaseData.length - 1]!.changePercentage >= 0
-                    ? "text-green-600"
-                    : "text-red-600"
-                  : ""
-              }`}
+            className={`text-sm font-semibold ${
+              sortedPurchaseData.length > 0 &&
+              sortedPurchaseData[sortedPurchaseData.length - 1]?.changePercentage !== undefined
+                ? sortedPurchaseData[sortedPurchaseData.length - 1]?.changePercentage! >= 0
+                  ? "text-green-600"
+                  : "text-red-600"
+                : ""
+            }`}
+            
             >
               {sortedPurchaseData.length > 0 &&
               sortedPurchaseData[sortedPurchaseData.length - 1]?.changePercentage !== undefined
